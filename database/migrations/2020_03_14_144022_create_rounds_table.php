@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFightsTable extends Migration
+class CreateRoundsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateFightsTable extends Migration
      */
     public function up()
     {
-        Schema::create('fights', function (Blueprint $table) {
+        Schema::create('rounds', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("roundType");
+            $table->foreign('roundType')->references('id')->on('type_rounds');
             $table->foreignId("player1");
             $table->foreign('player1')->references('id')->on('participations');
             $table->foreignId("player2");
@@ -23,9 +25,6 @@ class CreateFightsTable extends Migration
             $table->foreign('winner')->references('id')->on('participations');
             $table->foreignId("tournament");
             $table->foreign('tournament')->references('id')->on('tournaments');
-            $table->foreignId("round");
-            $table->foreign('round')->references('id')->on('rounds');
-            $table->string("fightNum");
             $table->timestamps();
         });
     }
@@ -37,6 +36,6 @@ class CreateFightsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fights');
+        Schema::dropIfExists('rounds');
     }
 }
