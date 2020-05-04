@@ -20,6 +20,8 @@ class CreateTournamentsTable extends Migration
             $table->date("dateoftournament");
             $table->boolean("openregistration");
             $table->boolean("started");
+            $table->foreignId("creator");
+            $table->foreign('creator')->references('id')->on('users');
             $table->foreignId("game");
             $table->foreign('game')->references('id')->on('games');
             $table->timestamps();
