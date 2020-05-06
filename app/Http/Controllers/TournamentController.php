@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Game;
 use App\Tournament;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,18 @@ class TournamentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Game $game)
     {
-        //
+        $allT = Tournament::all();
+        $return = [];
+        foreach ($allT as $tournament) {
+            if ($game->id == $tournament->game) {
+                $return[] = $tournament;
+            }
+        }
+        return view(null, [
+            'tournaments' -> $return,
+        ]);
     }
 
     /**
@@ -24,7 +34,7 @@ class TournamentController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -46,7 +56,8 @@ class TournamentController extends Controller
      */
     public function show(Tournament $tournament)
     {
-        //
+        $torneo = Tournament::find($tournament);
+        return view(null, compact($torneo));
     }
 
     /**
@@ -57,7 +68,8 @@ class TournamentController extends Controller
      */
     public function edit(Tournament $tournament)
     {
-        //
+        $torneo = Tournament::find($tournament);
+        return view(null, compact($torneo));
     }
 
     /**

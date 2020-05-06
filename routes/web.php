@@ -23,4 +23,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/games', 'GameController@index')->name('listGames');
+Route::get('/tournaments/{idgame}', 'TournamentController@index')->name('listTournaments');
+Route::get('/tournament/{ID}');
