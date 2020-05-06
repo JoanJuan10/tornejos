@@ -15,12 +15,7 @@ class CreateFightsTable extends Migration
     {
         Schema::create('fights', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("player1");
-            $table->foreign('player1')->references('id')->on('participations');
-            $table->foreignId("player2");
-            $table->foreign('player2')->references('id')->on('participations');
-            $table->foreignId("winner");
-            $table->foreign('winner')->references('id')->on('participations');
+            $table->integer("winner");
             $table->foreignId("tournament");
             $table->foreign('tournament')->references('id')->on('tournaments');
             $table->foreignId("round");

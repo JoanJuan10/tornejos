@@ -21,7 +21,7 @@ class CreateRoundsTable extends Migration
             $table->foreign('player1')->references('id')->on('participations');
             $table->foreignId("player2");
             $table->foreign('player2')->references('id')->on('participations');
-            $table->foreignId("winner");
+            $table->foreignId("winner")->nullable();
             $table->foreign('winner')->references('id')->on('participations');
             $table->foreignId("tournament");
             $table->foreign('tournament')->references('id')->on('tournaments');
