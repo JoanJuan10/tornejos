@@ -19,16 +19,18 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', function () {
+    return redirect("/");
+})->name('home');
+
 Route::get('/privacitat', function () {
     return view("privacitat");
 })->name("privacitat");
 
+
 Route::get('/termes', function () {
     return view("termes");
 })->name("termes");
-
-Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
