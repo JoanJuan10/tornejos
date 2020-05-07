@@ -8,8 +8,12 @@
                 <div class="intro-lead-in">Benvingut a la Nostra Plataforma de Tornejos de Videojocs</div>
                 <div class="intro-heading text-uppercase">Uneix-te i participa</div>
                 <a class="btn btn-outline-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Informa't</a>
+                @guest
                 <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="{{route("register")}}">Uneix-te</a>
                 <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="{{route("login")}}">Logueja't</a>
+                @else
+                <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="{{route("listGames")}}">Busca un Torneig</a>
+                @endguest
             </div>
         </div>
     </header>
