@@ -16,7 +16,7 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->string("img_link");
+            $table->string("img_link")->default("");
             $table->timestamps();
         });
     }
