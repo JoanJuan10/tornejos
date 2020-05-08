@@ -14,7 +14,7 @@
         margin-top:auto;
     }
     body {
-        background-image: url("img/background.png");
+        background-image: url("{{asset('img/background.png')}}");
         display: flex;
         flex-direction:column;
     }
@@ -30,6 +30,10 @@
         text-align: center;
         margin: 0 auto;
         width: 40%;
+    }
+    section {
+        padding: 130px 0;
+        padding-bottom: 0px;
     }
     
 </style>
@@ -74,9 +78,14 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($games as $game)
+                @php
+
+                @endphp
                 <tr>
-                    <td>CSGO</td>
+                    <td><a href="{{route("listTournaments", $game->id)}}">{{$game->name}}</a></td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </section>

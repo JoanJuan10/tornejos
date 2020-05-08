@@ -13,17 +13,17 @@ class TournamentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Game $game)
+    public function index($game)
     {
         $allT = Tournament::all();
         $return = [];
         foreach ($allT as $tournament) {
-            if ($game->id == $tournament->game) {
+            if ($game == $tournament->game) {
                 $return[] = $tournament;
             }
         }
-        return view(null, [
-            'tournaments' -> $return,
+        return view("tournaments", [
+            'tournaments' => $return,
         ]);
     }
 
