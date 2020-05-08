@@ -17,6 +17,7 @@ class CreateGamesTable extends Migration
             $table->id();
             $table->string("name");
             $table->string("img_link")->default("");
+            // src="{{asset("img/games/" + $games->img_link)}}"
             $table->timestamps();
         });
     }
