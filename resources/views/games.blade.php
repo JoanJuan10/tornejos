@@ -1,32 +1,5 @@
 @extends("layouts.layout")
 
-@section("css")
-<style>
-    body {
-        background-image: url("{{asset('img/background.png')}}");
-        display: flex;
-        flex-direction:column;
-    }
-    tr, td, th {
-        text-align: center;
-        color: white;
-        border: 1px;
-    }
-    input {
-        color: white;
-        background-color: transparent;
-        text-align: center;
-        margin: 0 auto;
-        width: 40%;
-    }
-    section {
-        padding: 130px 0;
-        padding-bottom: 0px;
-    }
-    
-</style>
-@endsection
-
 @section("js")
 <script>
     function myFunction() {
@@ -49,34 +22,40 @@
         }
     }
 </script>
+
+@endsection
+
+@section("css")
+<style>
+    .boton-juego {
+        width: 100%;
+        color: white;
+        margin-top: 5px;
+        margin-bottom: 20px;
+    }
+    .img-fluid {
+        width: 100%;
+    }
+
+</style>
 @endsection
 
 @section("content")
-<div class="container">
-    <section style="text-align: center">
-        <h2 style="color: white">Busca Tornejos</h2><br><br>
-        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-    </section>
 
-    <section>
-        <table class="table" id="table">
-            <thead>
-                <tr>
-                    <th scope="col">Jocs</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($games as $game)
-                @php
-
-                @endphp
-                <tr>
-                    <td><a href="{{route("listTournaments", $game->id)}}">{{$game->name}}</a></td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </section>
-</div>
+<section>
+    <div class="container">
+        <div class="row">
+            @foreach ($games as $game)
+                <div class="col-md-3">
+                    <div><img id="icono" class="img-fluid" src="{{$game->img_link}}"></div>
+                    
+                    <form action="{{route("listTournaments", $game->id)}}" method="get">
+                        <button type="submit" class="btn btn-outline-dark boton-juego">{{$game->name}}</button>
+                    </form>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
 
 @endsection
