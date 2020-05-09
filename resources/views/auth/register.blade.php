@@ -2,9 +2,8 @@
 
 @section("css")
 <style>
-    #mainNav, .footer {
-        background-color: black!important;
-        color: white;
+    .card-header, label {
+        color: black;
     }
 </style>
 @endsection
