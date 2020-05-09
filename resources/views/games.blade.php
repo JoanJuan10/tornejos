@@ -44,6 +44,10 @@
 
 <section>
     <div class="container">
+    <div class="row">
+        <h2 style="color: white">Busca Tornejos</h2><br><br>
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+    </div>
         <div class="row">
             @foreach ($games as $game)
                 <div class="col-md-3">
