@@ -5,7 +5,6 @@
     <header class="masthead">
         <div class="container">
             <div class="intro-text">
-                <div class="intro-lead-in">Benvingut a la Nostra Plataforma de Tornejos de Videojocs</div>
                 <div class="intro-heading text-uppercase">Uneix-te i participa</div>
                 <a class="btn btn-outline-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Informa't</a>
                 @guest
