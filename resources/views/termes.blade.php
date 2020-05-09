@@ -1,14 +1,5 @@
 @extends("layouts.layout")
 
-@section("css")
-<style>
-    #mainNav, .footer {
-        background-color: black!important;
-        color: white;
-    }
-</style>
-@endsection
-
 @section("content")
 
 <section>
@@ -61,3 +52,5 @@
 
     </div>
 </section>
+
+@endsection

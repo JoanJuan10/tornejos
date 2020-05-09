@@ -54,8 +54,8 @@
 							{{ Auth::user()->name }} <span class="caret"></span>
 						</a>
 
-						<div class="nav-item dropdown-menu dropdown-menu-right" style="background-color: brown!important" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="{{ route('logout') }}"
+						<div class="nav-item dropdown-menu dropdown-menu-right" style="background-color: red!important" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" style="background-color: transparent; text-align: center; font-weight: 800;" href="{{ route('logout') }}"
 								onclick="event.preventDefault();
 								document.getElementById('logout-form').submit();">
 								{{ __('Logout') }}

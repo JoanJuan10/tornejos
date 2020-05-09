@@ -3432,8 +3432,9 @@ input[type=button].btn-block {
   padding: 0.5rem 0;
   margin: 0.125rem 0 0;
   font-size: 0.9rem;
-  color: #212529;
-  text-align: left;
+  color: black;
+  font-weight: 800;
+  text-align: center;
   list-style: none;
   background-color: #fff;
   background-clip: padding-box;
@@ -3606,8 +3607,8 @@ input[type=button].btn-block {
   padding: 0.25rem 1.5rem;
   clear: both;
   font-weight: 400;
-  color: #212529;
-  text-align: inherit;
+  color: black;
+  text-align: center;
   white-space: nowrap;
   background-color: transparent;
   border: 0;
