@@ -24,7 +24,7 @@ class GameSeeder extends Seeder
             'img_link' => 'https://static-cdn.jtvnw.net/ttv-boxart/Fortnite-285x380.jpg',
         ]);
         DB::table('games')->insert([
-            'name' => 'CSGO',
+            'name' => 'Counter Strike: Global Offensive',
             'img_link' => 'https://static-cdn.jtvnw.net/ttv-boxart/./Counter-Strike:%20Global%20Offensive-285x380.jpg',
         ]);
         DB::table('games')->insert([
@@ -38,6 +38,10 @@ class GameSeeder extends Seeder
         DB::table('games')->insert([
             'name' => 'Rocket League',
             'img_link' => 'https://static-cdn.jtvnw.net/ttv-boxart/Rocket%20League-285x380.jpg',
+        ]);
+        DB::table('games')->insert([
+            'name' => 'FIFA 20',
+            'img_link' => 'https://static-cdn.jtvnw.net/ttv-boxart/FIFA%2020-285x380.jpg',
         ]);
         DB::table('games')->insert([
             'name' => 'Farm Simulator 2019',

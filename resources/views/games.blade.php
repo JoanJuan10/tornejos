@@ -2,26 +2,30 @@
 
 @section("js")
 <script>
-    function myFunction() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("table");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } 
-                else {
-                    tr[i].style.display = "none";
-                }
-            }       
+    function filtrar() {
+        var input, filtre, games, i, txtValue;
+        input = $("#filtre");
+        filtre = input.val().toUpperCase();
+        games = $(".games").children();
+
+        for (var game in games) {
+            txtValue = $(games[game]).find("a").text();
+            if (txtValue.toUpperCase().indexOf(filtre) > -1) {
+                games[game].style.display = "";
+            } 
+            else {
+                games[game].style.display = "none";
+            }
         }
     }
+    
 </script>
+
+@guest
+<script>
+    location.href = "{{route('register')}}";
+</script>
+@endguest
 
 @endsection
 
@@ -36,6 +40,9 @@
     .img-fluid {
         width: 100%;
     }
+    #filtre {
+        margin-left: 30px;
+    }
 
 </style>
 @endsection
@@ -44,18 +51,15 @@
 
 <section>
     <div class="container">
-    <div class="row">
-        <h2 style="color: white">Busca Tornejos</h2><br><br>
-        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+    <div class="row" style="margin-bottom: 30px;">
+        <h2 style="color: white">Busca Tornejos</h2>
+        <input type="text" id="filtre" onkeyup="filtrar()" placeholder="Filtra per jocs" title="Escriu el nom del joc a buscar">
     </div>
-        <div class="row">
+        <div class="row games">
             @foreach ($games as $game)
                 <div class="col-md-3">
                     <div><img id="icono" class="img-fluid" src="{{$game->img_link}}"></div>
-                    
-                    <form action="{{route("listTournaments", $game->id)}}" method="get">
-                        <button type="submit" class="btn btn-outline-dark boton-juego">{{$game->name}}</button>
-                    </form>
+                    <a role="button" href="{{route("listTournaments", $game->id)}}" class="btn btn-outline-dark boton-juego">{{$game->name}}</a>
                 </div>
             @endforeach
         </div>
