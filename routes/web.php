@@ -35,5 +35,12 @@ Route::get('/termes', function () {
 //Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/games', 'GameController@index')->name('listGames');
+
 Route::get('/tournaments/{idgame}', 'TournamentController@index')->name('listTournaments');
-Route::get('/tournament/{ID}');
+
+Route::get('/tournament/create/{idgame?}', 'TournamentController@create')->name('createTournament');
+Route::post('/tournament/create', 'TournamentController@store')->name('storeTournament');
+Route::get('/tournament/edit', 'TournamentController@edit')->name('editTournament');
+Route::post('/tournament/edit', 'TournamentController@update')->name('updateTournament');
+Route::post('/tournament/delete', 'TournamentController@destroy')->name('deleteTournament');
+Route::get('/tournament/{ID}', 'TournamentController@show')->name("showTournament");

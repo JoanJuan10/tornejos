@@ -13,17 +13,10 @@ class Tournament extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'dateoftournament', 'openregistration', 'started', 'game',
+        'name', 'description', 'dateoftournament', 'openregistration', 'started', 'game_id','user_id',
     ];
 
-    /*
-    $table->id();
-            $table->string("name");
-            $table->string("description");
-            $table->date("dateoftournament");
-            $table->boolean("openregistration");
-            $table->boolean("started");
-            $table->foreignId("game");
-            $table->foreign('game')->references('id')->on('games');
-    */
+    public function creator() {
+        return $this->belongsTo('App\User', 'user_id');
+    }
 }

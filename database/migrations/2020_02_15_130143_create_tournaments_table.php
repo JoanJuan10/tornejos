@@ -22,12 +22,17 @@ class CreateTournamentsTable extends Migration
             $table->text("prizes");
             $table->boolean("openregistration");
             $table->boolean("started");
-            $table->foreignId("creator");
-            $table->foreign('creator')->references('id')->on('users');
-            $table->foreignId("game");
-            $table->foreign('game')->references('id')->on('games');
+            $table->unsignedBigInteger("user_id");
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger("game_id");
+            $table->foreign('game_id')->references('id')->on('games');
             $table->timestamps();
         });
+        /*Schema::table('posts', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+        
+            $table->foreign('user_id')->references('id')->on('users');
+        });*/
     }
 
     /**

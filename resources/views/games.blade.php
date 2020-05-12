@@ -43,6 +43,17 @@
     #filtre {
         margin-left: 30px;
     }
+    #crear-torneo a {
+        color: red;
+    }
+    #crear-torneo a:hover {
+        color: green;
+    }
+    #crear-torneo {
+        text-align: right;
+        font-size: 19px;
+        margin-top: 12px;
+    }
 
 </style>
 @endsection
@@ -54,6 +65,9 @@
     <div class="row" style="margin-bottom: 30px;">
         <h2 style="color: white">Busca Tornejos</h2>
         <input type="text" id="filtre" onkeyup="filtrar()" placeholder="Filtra per jocs" title="Escriu el nom del joc a buscar">
+        <div class="col-md-6" id="crear-torneo">
+            <a href="{{route('createTournament')}}" role="button"><i class="fa fa-plus-square" aria-hidden="true"></i> Crear Torneo</a>
+        </div>
     </div>
         <div class="row games">
             @foreach ($games as $game)

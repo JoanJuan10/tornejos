@@ -36,4 +36,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isAdmin(){
+        if(Auth::user() != null){
+            if(Auth::id() < 2){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    public function tournaments() {
+        return $this->hasMany('App\Tournament');
+    }
 }

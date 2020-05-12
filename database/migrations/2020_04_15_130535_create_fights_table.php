@@ -16,9 +16,9 @@ class CreateFightsTable extends Migration
         Schema::create('fights', function (Blueprint $table) {
             $table->id();
             $table->integer("winner");
-            $table->foreignId("tournament");
+            $table->unsignedBigInteger("tournament");
             $table->foreign('tournament')->references('id')->on('tournaments');
-            $table->foreignId("round");
+            $table->unsignedBigInteger("round");
             $table->foreign('round')->references('id')->on('rounds');
             $table->string("fightNum");
             $table->timestamps();

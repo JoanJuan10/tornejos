@@ -15,15 +15,12 @@ class TournamentController extends Controller
      */
     public function index($game)
     {
-        $allT = Tournament::all();
-        $return = [];
-        foreach ($allT as $tournament) {
-            if ($game == $tournament->game) {
-                $return[] = $tournament;
-            }
-        }
+        $allT = Tournament::where('game_id', '=', $game)->get();
+        $game = Game::find($game);
+
         return view("tournaments", [
-            'tournaments' => $return,
+            'tournaments' => $allT,
+            'game' => $game,
         ]);
     }
 
@@ -32,9 +29,15 @@ class TournamentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($game = null)
     {
+        if ($game != null){
+            $game = Game::find($game);
+        }
 
+        return view("newtournament", [
+            'game' => $game,
+        ]);
     }
 
     /**
