@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Round extends Model
 {
 
+    protected $fillable = [
+        'roundType', 'player1', 'player2', 'winner', 'tournament'
+    ];
 
 
     public function player1() {

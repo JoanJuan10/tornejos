@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Game;
 use App\Tournament;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use stdClass;
 
 class TournamentController extends Controller
 {
@@ -15,12 +18,13 @@ class TournamentController extends Controller
      */
     public function index($game)
     {
-        $allT = Tournament::where('game_id', '=', $game)->get();
+        $allT = Tournament::where('game_id', '=', $game)->orderBy('id', 'DESC')->get();
         $game = Game::find($game);
 
         return view("tournaments", [
             'tournaments' => $allT,
             'game' => $game,
+            'user' => Auth::user()->id,
         ]);
     }
 
@@ -48,7 +52,46 @@ class TournamentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /*return view("tournament", [
+            'info' => $return,
+        ]);*/
+
+        $juegos = Game::where('name', '=', $request->post("juego"))->get();
+
+        if (!$juegos->count()) {
+            Game::create([
+                'name' => $request->post("juego"),
+            ]);
+            $juegos = Game::where('name', '=', $request->post("juego"))->get();
+        }
+        foreach ($juegos as $juego) {
+            $juegos = $juego;
+        }
+        
+
+        $reglas = $request->post("reglas");
+        $premios = $request->post("premios");
+
+        $datetime = new DateTime();
+        $data = $request->post("fecha");
+        $datetime->setDate(substr($data,0,4), substr($data,5,2), substr($data,8,2));
+        $hora = $request->post("hora");
+        $datetime->setTime(substr($hora,0,2),substr($hora,3,2),0);
+
+        
+
+        Tournament::create([
+            'name' => $request->post("nombretorneo"),
+            'description' => $request->post("descripcion"),
+            'dateoftournament' => $datetime,
+            'rules' => $reglas,
+            'prizes' => $premios,
+            'openregistration' => 0,
+            'started' => 0,
+            'user_id' => Auth::id(),
+            'game_id' => $juegos->id,
+        ]);
+        return redirect(route("listTournaments",$juegos->id));
     }
 
     /**

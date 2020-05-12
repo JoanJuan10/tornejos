@@ -56,7 +56,7 @@
                     </thead>
                     <tbody>
                         @foreach ($tournaments as $tournament)
-                            @if ($tournament->openregistration && !$tournament->started)
+                            @if (($tournament->openregistration && !$tournament->started) || $tournament->user_id == $user)
                                 <tr>
                                     <td>{{$tournament->name}}</td>
                                     <td>{{$tournament->creator->name}}</td>

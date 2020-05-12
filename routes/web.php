@@ -39,7 +39,7 @@ Route::get('/games', 'GameController@index')->name('listGames');
 Route::get('/tournaments/{idgame}', 'TournamentController@index')->name('listTournaments');
 
 Route::get('/tournament/create/{idgame?}', 'TournamentController@create')->name('createTournament');
-Route::post('/tournament/create', 'TournamentController@store')->name('storeTournament');
+Route::post('/tournament/store', 'TournamentController@store')->name('storeTournament');
 Route::get('/tournament/edit', 'TournamentController@edit')->name('editTournament');
 Route::post('/tournament/edit', 'TournamentController@update')->name('updateTournament');
 Route::post('/tournament/delete', 'TournamentController@destroy')->name('deleteTournament');

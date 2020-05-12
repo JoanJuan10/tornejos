@@ -17,7 +17,7 @@ class CreateTournamentsTable extends Migration
             $table->id();
             $table->string("name");
             $table->text("description");
-            $table->date("dateoftournament");
+            $table->datetime("dateoftournament");
             $table->text("rules");
             $table->text("prizes");
             $table->boolean("openregistration");

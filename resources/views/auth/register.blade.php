@@ -5,6 +5,9 @@
     .card-header, label {
         color: black;
     }
+    .row a:hover {
+        color: blue;
+    }
 </style>
 @endsection
 
@@ -69,6 +72,22 @@
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <label for="terminos" class="col-md-4 col-form-label text-md-right">Aceptas los <a href="{{route("termes")}}" target="_blank">terminos y condiciones</a></label>
+
+                                <div class="col-md-6">
+                                    <input id="terminos" type="checkbox" style="width: 34px; height: 34px;" class="form-check" name="terminos" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="privacidad" class="col-md-4 col-form-label text-md-right">Aceptas la <a href="{{route("privacitat")}}" target="_blank">política de privacidad</a></label>
+
+                                <div class="col-md-6">
+                                    <input id="privacidad" type="checkbox" style="width: 34px; height: 34px;" class="form-check" name="privacidad" required>
+                                </div>
+                            </div>
+                            
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
