@@ -13,10 +13,14 @@ class Tournament extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'dateoftournament', 'openregistration', 'started', 'game_id','user_id','rules','prizes'
+        'name', 'description', 'dateoftournament', 'openregistration', 'started', 'game_id','user_id','rules','prizes', 'public'
     ];
 
     public function creator() {
         return $this->belongsTo('App\User', 'user_id');
+    }
+
+    public function game() {
+        return $this->belongsTo('App\Game', 'game_id');
     }
 }

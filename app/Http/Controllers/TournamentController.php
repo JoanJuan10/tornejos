@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Game;
+use App\Participation;
 use App\Tournament;
 use DateTime;
 use Illuminate\Http\Request;
@@ -46,15 +47,12 @@ class TournamentController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
+     *t
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        /*return view("tournament", [
-            'info' => $return,
-        ]);*/
 
         $juegos = Game::where('name', '=', $request->post("juego"))->get();
 
@@ -100,22 +98,36 @@ class TournamentController extends Controller
      * @param  \App\Tournament  $tournament
      * @return \Illuminate\Http\Response
      */
-    public function show(Tournament $tournament)
+    public function show($tournament)
     {
         $torneo = Tournament::find($tournament);
-        return view(null, compact($torneo));
+
+        $participantes = Participation::where("tournament", "=", $torneo->id)->get();
+
+        return view("tournament", [
+            'torneo' => $torneo,
+            'user' => Auth::user(),
+            'participantes' => $participantes,
+        ]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified resource. 
      *
      * @param  \App\Tournament  $tournament
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tournament $tournament)
+    public function edit($tournament)
     {
         $torneo = Tournament::find($tournament);
-        return view(null, compact($torneo));
+        $date = substr($torneo->dateoftournament, 0,10);
+        $time = substr($torneo->dateoftournament, 11,5);
+        return view("edittournament", [
+            'torneo' => $torneo,
+            'date' => $date,
+            'time' => $time,
+            'user' => Auth::user(),
+        ]);
     }
 
     /**
@@ -125,9 +137,39 @@ class TournamentController extends Controller
      * @param  \App\Tournament  $tournament
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tournament $tournament)
+    public function update(Request $request, $tournament)
     {
-        //
+        $juegos = Game::where("name", '=', $request->post("juego"))->get();
+
+        if (!$juegos->count()) {
+            Game::create([
+                'name' => $request->post("juego"),
+            ]);
+            $juegos = Game::where('name', '=', $request->post("juego"))->get();
+        }
+        foreach ($juegos as $juego) {
+            $juegos = $juego;
+        }
+
+        $torneo = Tournament::find($tournament);
+
+        $torneo->name = $request->post('nombretorneo');
+        $torneo->description = $request->post('descripcion');
+        $torneo->rules = $request->post('reglas');
+        $torneo->prizes = $request->post('premios');
+        $torneo->game_id = $juegos->id;
+
+        $datetime = new DateTime();
+        $data = $request->post("fecha");
+        $datetime->setDate(substr($data,0,4), substr($data,5,2), substr($data,8,2));
+        $hora = $request->post("hora");
+        $datetime->setTime(substr($hora,0,2),substr($hora,3,2),0);
+
+
+        $torneo->dateoftournament = $datetime;
+        $torneo->save();
+
+        return redirect(route('showTournament', $torneo->id));
     }
 
     /**
@@ -136,8 +178,39 @@ class TournamentController extends Controller
      * @param  \App\Tournament  $tournament
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tournament $tournament)
+    public function destroy($tournament)
     {
-        //
+        $torneo = Tournament::find($tournament);
+        $juego = $torneo->game->id;
+        Tournament::destroy($tournament);
+        return redirect(route("listTournaments", $juego));
+    }
+    public function inscripciones ($tournament) {
+        $torneo = Tournament::find($tournament);
+
+        if ($torneo->openregistration) {
+            $torneo->openregistration = 0;
+        }
+        else {
+            $torneo->openregistration = 1;
+        }
+
+        $torneo->save();
+
+        return redirect(route('showTournament', $torneo->id));
+
+    }
+    public function start ($tournament) {
+        $torneo = Tournament::find($tournament);
+
+        if ($torneo->openregistration) {
+            $torneo->openregistration = 0;
+        }
+        $torneo->started = 1;
+
+        $torneo->save();
+
+        return redirect(route('showTournament', $torneo->id));
+        
     }
 }

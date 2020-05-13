@@ -13,15 +13,16 @@ class CreateTournamentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tournaments', function (Blueprint $table) {
+        Schema::create('tournaments', function (Blueprint $table) {l
             $table->id();
             $table->string("name");
             $table->text("description");
             $table->datetime("dateoftournament");
             $table->text("rules");
             $table->text("prizes");
-            $table->boolean("openregistration");
-            $table->boolean("started");
+            $table->boolean("openregistration")->default(0);
+            $table->boolean("started")->default(0);
+            $table->boolean("public")->default(0);
             $table->unsignedBigInteger("user_id");
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger("game_id");

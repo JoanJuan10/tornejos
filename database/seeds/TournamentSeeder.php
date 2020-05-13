@@ -36,6 +36,7 @@ class TournamentSeeder extends Seeder
             'dateoftournament' => new DateTime(),
             'rules' => 'fsdjfioa',
             'prizes' => 'sdhfioad',
+            'public' => 1,
             'openregistration' => true,
             'started' => false,
             'user_id' => 1,
