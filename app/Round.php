@@ -8,17 +8,14 @@ class Round extends Model
 {
 
     protected $fillable = [
-        'roundType', 'player1', 'player2', 'winner', 'tournament'
+        'roundtype', 'user_id_1', 'user_id_2', 'score1','score2', 'tournament_id'
     ];
 
 
     public function player1() {
-        return $this->belongsTo('App\User', 'player1');
+        return $this->belongsTo('App\Participation', 'user_id_1');
     }
     public function player2() {
-        return $this->belongsTo('App\User', 'player2');
-    }
-    public function winner() {
-        return $this->belongsTo('App\User', 'winner');
+        return $this->belongsTo('App\Participation', 'user_id_2');
     }
 }

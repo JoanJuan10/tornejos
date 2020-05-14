@@ -15,16 +15,21 @@ class CreateRoundsTable extends Migration
     {
         Schema::create('rounds', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("type_round_id");
-            $table->foreign('type_round_id')->references('id')->on('type_rounds');
-            $table->unsignedBigInteger("user_id_1");
+            
+            $table->unsignedBigInteger("user_id_1")->nullable();
             $table->foreign('user_id_1')->references('id')->on('participations');
-            $table->unsignedBigInteger("user_id_2");
+
+            $table->unsignedBigInteger("user_id_2")->nullable();
             $table->foreign('user_id_2')->references('id')->on('participations');
-            $table->unsignedBigInteger("winner_id")->nullable();
-            $table->foreign('winner_id')->references('id')->on('participations');
+
+            $table->integer("score1")->nullable();
+
+            $table->integer("score2")->nullable();
+
             $table->unsignedBigInteger("tournament_id");
             $table->foreign('tournament_id')->references('id')->on('tournaments');
+            
+            $table->string("roundtype");
             $table->timestamps();
         });
     }

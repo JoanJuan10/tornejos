@@ -1,21 +1,197 @@
 @extends("layouts.layout")
 
 @section ("css")
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-bracket/0.11.1/jquery.bracket.min.css" integrity="sha256-QB9Q3ENRUxlbd2KF7DKBQwoqaKOsczw7BVnbCVTTKsM=" crossorigin="anonymous" />
 <style>
     #tournamentmenu {
         padding-top: 0px;
         padding-bottom: 0px;
         margin: 0 auto;
     }
+    .bracket {
 
+    }
+    .match {
+
+    }
+    .round {
+
+    }
+
+    .team {
+
+    }
+    .win {
+
+    }
+    .lose {
+
+    }
+    .highlight {
+
+    }
+
+    .highlightWinner {
+
+    }
+
+    .highlightLoser {
+
+    }
+
+    .connector {
+
+    }
+
+    .label {
+
+    }
+
+    .score {
+
+    }
+
+    .na {
+
+    }
+
+    .bubble {
+
+    }
+
+    .third {
+
+    }
+
+    .fourth {
+
+    }
+    
 </style>
 @endsection
 
 @section ("js")
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-bracket/0.11.1/jquery.bracket.min.js" integrity="sha256-mvNdP3BR+ati2Deig7ivY+0Oij09NJCRVV2lvM/R+14=" crossorigin="anonymous"></script>
 <script>
     $(function () {
-        
+
+        $.ajax({
+            type: "GET",
+            url: "{{route('generarLlave',$torneo->id)}}",
+            success: function (response) {
+                //console.log(response);
+                var equipos = [];
+                for (let i = 0; i < response.length / 2; i++) {
+                    equipos.push([response[i].user_id_1, response[i].user_id_2]);
+                }
+                var mitad = response.length / 2;
+
+                var resultados = [];
+
+                for (let i = 0; i < Math.log2(response.length); i++) {
+                    resultados[i] = [];
+                    for (let j = 0; j < mitad; j++) {
+                        resultados[i][j] = [];
+                        if (j == 0) {
+                            resultados[i][j].push(response[j].score1,response[j].score2);
+                        }
+                        else {
+                            resultados[i][j].push(null,null);
+                        }
+                    }
+                    mitad = mitad / 2;
+                    if (mitad < 2) {
+                        mitad = 2;
+                    }
+                }
+                console.log(response);
+                console.log(resultados);
+                var saveData = {
+                    teams: equipos,
+                    results: resultados,
+                };
+                /* Called whenever bracket is modified
+                 *
+                 * data:     changed bracket object in format given to init
+                 * userData: optional data given when bracket is created.
+                 */
+                function saveFn(data, userData) {
+                    var info = {"data": data, "userData": userData};
+                    $.ajax({
+                        type: "GET",
+                        url: "{{route('modificarLlave',$torneo->id)}}",
+                        data: info,
+                        dataType: "JSON",
+                        success: function (response) {
+                            console.log(response);
+                        }
+                    });
+                }
+                 
+                var container = $('.demo');
+                container.bracket({
+                    init: saveData,
+                    save: saveFn,
+                    userData: "Hola",
+                    teamWidth: 200,
+                    scoreWidth: 32,
+                    matchMargin: 64,
+                    roundMargin: 65,
+                    disableToolbar: true,
+                    disableTeamEdit: true,
+                });
+                
+            }
+        });
+
+        /*var saveData = {
+            teams: [
+                ["Team 1", "Team 2"],
+                ["Team 3", null],
+                ["Team 4", null],
+                ["Team 5", null],
+            ],
+            results: [
+                [
+                    [[null, null], [null, null], [null, null], [null, null]],
+                    [[null, null], [null, null]],
+                    [[null, null], [null, null]],
+                ]
+            ]
+        };*/
+         
+        /* Called whenever bracket is modified
+         *
+         * data:     changed bracket object in format given to init
+         * userData: optional data given when bracket is created.
+         */
+        /*function saveFn(data, userData) {
+            var info = {"data": data, "userData": userData};
+            $.ajax({
+                type: "GET",
+                url: "{{route('modificarLlave',$torneo->id)}}",
+                data: info,
+                dataType: "JSON",
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+         
+        var container = $('.demo');
+        container.bracket({
+            init: saveData,
+            save: saveFn,
+            userData: "Hola",
+            teamWidth: 150,
+            scoreWidth: 32,
+            matchMargin: 64,
+            roundMargin: 65,
+            disableToolbar: true,
+            disableTeamEdit: true,
+        });*/
+
     });
 </script>
 
@@ -120,7 +296,11 @@
     </section>
 @else
 <section>
-HOLA
+    <div class="container">
+        <div class="demo">
+        
+        </div>
+    </div>
 </section>
     
 @endif

@@ -49,3 +49,6 @@ Route::get('/tournament/{ID}', 'TournamentController@show')->name("showTournamen
 Route::get('/tournament/{IDTorneo}/join/{IDPlayer}', 'ParticipationController@store')->name("entrarTorneo");
 Route::get('/tournament/{IDTorneo}/leave/{IDPlayer}', 'ParticipationController@destroy')->name("salirTorneo");
 
+Route::get('/saveBracket/{IDTorneo}', 'TournamentController@savebracket')->name("modificarLlave");
+Route::get('/generateBracket/{IDTorneo}', 'TournamentController@genbracket')->name("generarLlave");
+

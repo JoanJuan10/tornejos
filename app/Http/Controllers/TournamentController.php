@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Game;
 use App\Participation;
+use App\Round;
 use App\Tournament;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use stdClass;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class TournamentController extends Controller
 {
@@ -230,7 +232,100 @@ class TournamentController extends Controller
 
         $torneo->save();
 
+        $participantes = Participation::where('tournament_id', '=', $tournament)->get();
+
+        $fights = 0;
+
+        if ($participantes->count() == 2) {
+            $numfights = 1;
+            $fights = [
+                [1,2]
+            ];
+        }
+        else if ($participantes->count() <= 4) {
+            $numfights = 4;
+            $fights = [
+                [1,4],
+                [2,5],
+            ];
+        }
+        else if ($participantes->count() <= 8) {
+            $numfights = 8;
+            $fights = [
+                [1,8],
+                [4,5],
+                [2,7],
+                [3,6],
+            ];
+        }
+        else if ($participantes->count() <= 16) {
+            $numfights = 16;
+            $fights = [
+                [1,16],
+                [3,9],
+                [4,13],
+                [5,12],
+                [2,15],
+                [7,10],
+                [3,14],
+                [6,11],
+            ];
+        }
+        else if ($participantes->count() <= 32) {
+            $numfights = 32;
+            $fights = [
+                [1,32],
+                [16,17],
+                [8,25],
+                [9,24],
+                [4,29],
+                [13,20],
+                [5,28],
+                [12,21],
+                [2,31],
+                [15,18],
+                [7,26],
+                [10,23],
+                [3,30],
+                [14,19],
+                [6,27],
+                [11,22],
+            ];
+        }
+        for ($i=0; $i < $numfights; $i++) { 
+            if (($i + 1) <= $numfights / 2) {
+                Round::create([
+                    'user_id_1' => $participantes[$fights[$i][0] - 1]->id,
+                    'user_id_2' => $participantes[$fights[$i][1] - 1]->id,
+                    'tournament_id' => $tournament,
+                    'roundtype' => "X",
+                ]);
+            }
+            else {
+                Round::create([
+                    'tournament_id' => $tournament,
+                    'roundtype' => "X",
+                ]);
+            }
+        }
+
+
+
         return redirect(route('showTournament', $torneo->id));
         
+    }
+    public function savebracket($idtournament, Request $request) {
+        return new JsonResponse($_GET);
+    }
+    public function genbracket($idtournament, Request $request) {
+        $rondas = Round::where("tournament_id", "=", $idtournament)->get();
+
+        foreach ($rondas as $ronda) {
+            if ($ronda->user_id_1) {
+                $ronda->user_id_1 = $ronda->player1->player->name;
+                $ronda->user_id_2 = $ronda->player2->player->name;
+            }
+        }
+        return new JsonResponse($rondas);
     }
 }
