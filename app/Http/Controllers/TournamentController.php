@@ -239,6 +239,11 @@ class TournamentController extends Controller
     }
     public function start ($tournament) {
         $torneo = Tournament::find($tournament);
+        $participantes = Participation::where('tournament_id', '=', $tournament)->get();
+
+        if ($participantes->count() < 2) {
+            return redirect(route('showTournament', $torneo->id));
+        }
 
         if ($torneo->openregistration) {
             $torneo->openregistration = 0;
@@ -247,7 +252,7 @@ class TournamentController extends Controller
 
         $torneo->save();
 
-        $participantes = Participation::where('tournament_id', '=', $tournament)->get();
+        
 
         $fights = 0;
 

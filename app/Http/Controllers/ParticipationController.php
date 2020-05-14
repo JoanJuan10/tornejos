@@ -40,7 +40,6 @@ class ParticipationController extends Controller
             Participation::create([
                 'user_id' => $idplayer,
                 'tournament_id' => $idtournament,
-                'defeated' => 0,
             ]);
         }
         return redirect(route("showTournament",$idtournament));
