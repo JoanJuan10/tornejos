@@ -73,7 +73,7 @@ class TournamentController extends Controller
         $premios = $request->post("premios");
 
         $datetime = new DateTime();
-        $datia = $request-()>post("fecha");
+        $data = $request->post("fecha");
         $datetime->setDate(substr($data,0,4), substr($data,5,2), substr($data,8,2));
         $hora = $request->post("hora");
         $datetime->setTime(substr($hora,0,2),substr($hora,3,2),0);

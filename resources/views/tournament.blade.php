@@ -117,7 +117,7 @@
                     var info = {"data": data};
                     $.ajax({
                         type: "GET",
-            ''            url: "{{route('modificarLlave',$torneo->id)}}",
+            ''  a          url: "{{route('modificarLlave',$torneo->id)}}",
                         data: info,
                         dataType: "JSON",
                         success: function (response) {
