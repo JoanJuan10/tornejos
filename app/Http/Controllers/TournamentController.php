@@ -306,11 +306,20 @@ class TournamentController extends Controller
             ];
         }
         for ($i=0; $i < $numfights; $i++) { 
-            if (($i + 1) <= $numfights / 2) {
+            if (($i + 1) <= $numfights / 2 || $numfights == 1) {
+                $value1 = null;
+                $value2 = null;
+
+                if (!empty($participantes[$fights[$i][0]- 1])) {
+                    $value1 = $participantes[$fights[$i][0]- 1]->id;
+                }
+                if (!empty($participantes[$fights[$i][1]- 1])) {
+                    $value2 = $participantes[$fights[$i][1]- 1]->id;
+                }
                 
                 Round::create([
-                    'user_id_1' => $participantes[$fights[$i][0]- 1]->id,
-                    'user_id_2' => $participantes[$fights[$i][1]- 1]->id,
+                    'user_id_1' => $value1,
+                    'user_id_2' => $value2,
                     'tournament_id' => $tournament,
                     'roundtype' => "Base",
                 ]);
@@ -357,7 +366,15 @@ class TournamentController extends Controller
         foreach ($rondas as $ronda) {
             if ($ronda->user_id_1) {
                 $ronda->user_id_1 = $ronda->player1->player->name;
+            }
+            else {
+                $ronda->user_id_1 = null;
+            }
+            if ($ronda->user_id_2) {
                 $ronda->user_id_2 = $ronda->player2->player->name;
+            }
+            else {
+                $ronda->user_id_2 = null;
             }
         }
 
