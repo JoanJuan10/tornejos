@@ -80,7 +80,6 @@
             type: "GET",
             url: "{{route('generarLlave',$torneo->id)}}",
             success: function (response) {
-                //console.log(response);
                 var equipos = [];
                 for (let i = 0; i < response.length / 2; i++) {
                     equipos.push([response[i].user_id_1, response[i].user_id_2]);
@@ -88,17 +87,14 @@
                 var mitad = response.length / 2;
 
                 var resultados = [];
+                var resNum = 0;
 
                 for (let i = 0; i < Math.log2(response.length); i++) {
                     resultados[i] = [];
                     for (let j = 0; j < mitad; j++) {
                         resultados[i][j] = [];
-                        if (j == 0) {
-                            resultados[i][j].push(response[j].score1,response[j].score2);
-                        }
-                        else {
-                            resultados[i][j].push(null,null);
-                        }
+                        resultados[i][j].push(response[resNum].score1,response[resNum].score2);
+                        resNum++;
                     }
                     mitad = mitad / 2;
                     if (mitad < 2) {
@@ -116,8 +112,8 @@
                  * data:     changed bracket object in format given to init
                  * userData: optional data given when bracket is created.
                  */
-                function saveFn(data, userData) {
-                    var info = {"data": data, "userData": userData};
+                function saveFn(data) {
+                    var info = {"data": data};
                     $.ajax({
                         type: "GET",
                         url: "{{route('modificarLlave',$torneo->id)}}",
@@ -144,54 +140,6 @@
                 
             }
         });
-
-        /*var saveData = {
-            teams: [
-                ["Team 1", "Team 2"],
-                ["Team 3", null],
-                ["Team 4", null],
-                ["Team 5", null],
-            ],
-            results: [
-                [
-                    [[null, null], [null, null], [null, null], [null, null]],
-                    [[null, null], [null, null]],
-                    [[null, null], [null, null]],
-                ]
-            ]
-        };*/
-         
-        /* Called whenever bracket is modified
-         *
-         * data:     changed bracket object in format given to init
-         * userData: optional data given when bracket is created.
-         */
-        /*function saveFn(data, userData) {
-            var info = {"data": data, "userData": userData};
-            $.ajax({
-                type: "GET",
-                url: "{{route('modificarLlave',$torneo->id)}}",
-                data: info,
-                dataType: "JSON",
-                success: function (response) {
-                    console.log(response);
-                }
-            });
-        }
-         
-        var container = $('.demo');
-        container.bracket({
-            init: saveData,
-            save: saveFn,
-            userData: "Hola",
-            teamWidth: 150,
-            scoreWidth: 32,
-            matchMargin: 64,
-            roundMargin: 65,
-            disableToolbar: true,
-            disableTeamEdit: true,
-        });*/
-
     });
 </script>
 

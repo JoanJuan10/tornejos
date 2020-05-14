@@ -202,11 +202,24 @@ class TournamentController extends Controller
      */
     public function destroy($tournament)
     {
+        
+        $rondas = Round::where('tournament_id', '=', $tournament)->get();
+        foreach ($rondas as $ronda) {
+
+            Round::destroy($ronda->id);
+        }
+
+        $participaciones = Participation::where('tournament_id', '=', $tournament)->get();
+        foreach ($participaciones as $participacion) {
+            Participation::destroy($participacion->id);
+        }
+
         $torneo = Tournament::find($tournament);
         $juego = $torneo->game->id;
         Tournament::destroy($tournament);
         return redirect(route("listTournaments", $juego));
     }
+
     public function inscripciones ($tournament) {
         $torneo = Tournament::find($tournament);
 
@@ -246,7 +259,7 @@ class TournamentController extends Controller
             $numfights = 4;
             $fights = [
                 [1,4],
-                [2,5],
+                [2,3],
             ];
         }
         else if ($participantes->count() <= 8) {
@@ -294,11 +307,12 @@ class TournamentController extends Controller
         }
         for ($i=0; $i < $numfights; $i++) { 
             if (($i + 1) <= $numfights / 2) {
+                
                 Round::create([
-                    'user_id_1' => $participantes[$fights[$i][0] - 1]->id,
-                    'user_id_2' => $participantes[$fights[$i][1] - 1]->id,
+                    'user_id_1' => $participantes[$fights[$i][0]- 1]->id,
+                    'user_id_2' => $participantes[$fights[$i][1]- 1]->id,
                     'tournament_id' => $tournament,
-                    'roundtype' => "X",
+                    'roundtype' => "Base",
                 ]);
             }
             else {
@@ -315,7 +329,27 @@ class TournamentController extends Controller
         
     }
     public function savebracket($idtournament, Request $request) {
-        return new JsonResponse($_GET);
+        $data = $_GET["data"]["results"][0];
+        $rondas = Round::where("tournament_id", "=", $idtournament)->get();
+        $i = 0;
+        foreach ($data as $round) {
+            foreach ($round as $scores) {
+                $ronda = Round::find($rondas[$i]->id);
+                if (intval($scores[0]) === 0 && intval($scores[1]) === 0) {
+                    $ronda->score1 = null;
+                    $ronda->score2 = null;
+                }
+                else {
+                    $ronda->score1 = intval($scores[0]);
+                    $ronda->score2 = intval($scores[1]);
+                }
+                $ronda->save();
+                $i++;
+            }
+            
+        }
+        $rondas = Round::where("tournament_id", "=", $idtournament)->get();
+        return new JsonResponse($rondas);
     }
     public function genbracket($idtournament, Request $request) {
         $rondas = Round::where("tournament_id", "=", $idtournament)->get();
@@ -326,6 +360,7 @@ class TournamentController extends Controller
                 $ronda->user_id_2 = $ronda->player2->player->name;
             }
         }
+
         return new JsonResponse($rondas);
     }
 }
