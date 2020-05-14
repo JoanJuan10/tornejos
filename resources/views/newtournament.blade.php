@@ -81,7 +81,7 @@
                     <fieldset>
                         <legend>Miscelánea</legend>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="publico" name="publico" value="si">
+                            <input type="checkbox" class="form-check-input" id="publico" name="publico" value="1">
                             <label class="form-check-label" for="publico">Torneo Publico</label>
                         </div>
                     </fieldset>

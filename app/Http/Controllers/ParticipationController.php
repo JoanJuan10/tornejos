@@ -33,9 +33,14 @@ class ParticipationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($idtournament, $idplayer)
     {
-        //
+        Participation::create([
+            'user_id' => $idplayer,
+            'tournament_id' => $idtournament,
+            'defeated' => 0,
+        ]);
+        return redirect(route("showTournament",$idtournament));
     }
 
     /**
@@ -78,8 +83,15 @@ class ParticipationController extends Controller
      * @param  \App\Participation  $participation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Participation $participation)
+    public function destroy($idtournament, $idplayer)
     {
-        //
+        $participations = Participation::where("user_id", "=", $idplayer)->where("tournament_id", "=", $idtournament)->get();
+
+        foreach ($participations as $participation) {
+            $participations = $participation;
+        }
+        Participation::destroy($participations->id);
+
+        return redirect(route("showTournament", $idtournament));
     }
 }

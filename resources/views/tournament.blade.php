@@ -63,12 +63,29 @@
                             <a class="nav-link disabled" href="#?mode=forum">Forum</a>
                         @endif
                     </li>
-                    <li class="nav-item" title="Próximamente">
-                        <a class="nav-link disabled" href="#">Unirse</a>
-                    </li>
-                    <li class="nav-item" title="Próximamente">
-                        <a class="nav-link disabled" href="#">Abandonar</a>
-                    </li>
+                    @if ($torneo->openregistration)
+                        @if ($participantes->count())
+                            @for ($i = 0; $i < $participantes->count(); $i++)
+                                @if ($participantes[$i]->user_id == $user->id)
+                                    <li class="nav-item" title="Próximamente">
+                                        <a class="nav-link disabled" href="{{route("salirTorneo",[$torneo->id, $user->id])}}">Abandonar</a>
+                                    </li> 
+                                    @php
+                                        $i = 10000
+                                    @endphp
+                                @endif
+                                @if ($i == $participantes->count() - 1) 
+                                    <li class="nav-item" title="Próximamente">
+                                        <a class="nav-link disabled" href="{{route("entrarTorneo",[$torneo->id, $user->id])}}">Unirse</a>
+                                    </li>
+                                @endif
+                            @endfor
+                        @else
+                            <li class="nav-item" title="Próximamente">
+                                <a class="nav-link disabled" href="{{route("entrarTorneo",[$torneo->id, $user->id])}}">Unirse</a>
+                            </li>
+                        @endif
+                    @endif
                 </ul>
             </div>
         </div>
@@ -76,31 +93,30 @@
 </section>
 @if ($_GET && $_GET["mode"] == "participants")
     <section>
-    <div class="container">
-        <table class="table table-hover table-dark participantes">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Participante</th>
-                </tr>
-            </thead>
-            <tbody>
-            @php
-                $i = 1;
-            @endphp
-                @foreach ($participantes as $participante)
+        <div class="container">
+            <table class="table table-hover table-dark participantes">
+                <thead>
                     <tr>
-                        <td>{{$i}}</td>
-                        <td>{{$participante->player}}</td>
+                        <th>#</th>
+                        <th>Participante</th>
                     </tr>
-                    @php
-                    $i++;
-                    @endphp
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-        
+                </thead>
+                <tbody>
+                @php
+                    $i = 1;
+                @endphp
+                    @foreach ($participantes as $participante)
+                        <tr>
+                            <td>{{$i}}</td>
+                            <td>{{$participante->player->name}}</td>
+                        </tr>
+                        @php
+                        $i++;
+                        @endphp
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </section>
 @else
 <section>

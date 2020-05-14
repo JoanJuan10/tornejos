@@ -35,12 +35,29 @@
                     <li class="nav-item" title="Próximamente" id="forum">
                         <a class="nav-link disabled" href="#?mode=forum">Forum</a>
                     </li>
-                    <li class="nav-item" title="Próximamente">
-                        <a class="nav-link disabled" href="#">Unirse</a>
-                    </li>
-                    <li class="nav-item" title="Próximamente">
-                        <a class="nav-link disabled" href="#">Abandonar</a>
-                    </li>
+                    @if ($torneo->openregistration)
+                        @if ($participantes->count())
+                            @for ($i = 0; $i < $participantes->count(); $i++)
+                                @if ($participantes[$i]->user_id == $user->id)
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{route("salirTorneo",[$torneo->id, $user->id])}}">Abandonar</a>
+                                    </li>
+                                    @php
+                                        $i = 10000
+                                    @endphp
+                                @endif
+                                @if ($i == $participantes->count() - 1) 
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{route("entrarTorneo",[$torneo->id, $user->id])}}">Unirse</a>
+                                    </li>
+                                @endif
+                            @endfor
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route("entrarTorneo",[$torneo->id, $user->id])}}">Unirse</a>
+                            </li>
+                        @endif
+                    @endif
                 </ul>
             </div>
         </div>
@@ -103,7 +120,12 @@
                     <fieldset>
                         <legend>Miscelánea</legend>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="publico" name="publico" value="si">
+                            @if ($torneo->public)
+                                <input type="checkbox" class="form-check-input" checked id="publico" name="publico" value="1">
+                            @else
+                                <input type="checkbox" class="form-check-input" id="publico" name="publico" value="1">
+                            @endif
+                            
                             <label class="form-check-label" for="publico">Torneo Publico</label>
                         </div>
                     </fieldset>

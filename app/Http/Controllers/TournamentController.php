@@ -76,6 +76,13 @@ class TournamentController extends Controller
         $hora = $request->post("hora");
         $datetime->setTime(substr($hora,0,2),substr($hora,3,2),0);
 
+        $public = 0;
+        if ($request->post("publico")) {
+            $public = 1;
+        }
+        else {
+            $public = 0;
+        }
         
 
         Tournament::create([
@@ -86,6 +93,7 @@ class TournamentController extends Controller
             'prizes' => $premios,
             'openregistration' => 0,
             'started' => 0,
+            'public' => $public,
             'user_id' => Auth::id(),
             'game_id' => $juegos->id,
         ]);
@@ -102,7 +110,7 @@ class TournamentController extends Controller
     {
         $torneo = Tournament::find($tournament);
 
-        $participantes = Participation::where("tournament", "=", $torneo->id)->get();
+        $participantes = Participation::where("tournament_id", "=", $torneo->id)->get();
 
         return view("tournament", [
             'torneo' => $torneo,
@@ -119,7 +127,9 @@ class TournamentController extends Controller
      */
     public function edit($tournament)
     {
+        
         $torneo = Tournament::find($tournament);
+        $participantes = Participation::where("tournament_id", "=", $torneo->id)->get();
         $date = substr($torneo->dateoftournament, 0,10);
         $time = substr($torneo->dateoftournament, 11,5);
         return view("edittournament", [
@@ -127,6 +137,7 @@ class TournamentController extends Controller
             'date' => $date,
             'time' => $time,
             'user' => Auth::user(),
+            'participantes' => $participantes,
         ]);
     }
 
@@ -151,6 +162,14 @@ class TournamentController extends Controller
             $juegos = $juego;
         }
 
+        $public = 0;
+        if ($request->post("publico")) {
+            $public = 1;
+        }
+        else {
+            $public = 0;
+        }
+
         $torneo = Tournament::find($tournament);
 
         $torneo->name = $request->post('nombretorneo');
@@ -158,6 +177,7 @@ class TournamentController extends Controller
         $torneo->rules = $request->post('reglas');
         $torneo->prizes = $request->post('premios');
         $torneo->game_id = $juegos->id;
+        $torneo->public = $public;
 
         $datetime = new DateTime();
         $data = $request->post("fecha");

@@ -46,3 +46,6 @@ Route::get('/tournament/delete/{ID}', 'TournamentController@destroy')->name('del
 Route::get('/tournament/{ID}/openinscription', 'TournamentController@inscripciones')->name("inscripcionesTorneo");
 Route::get('/tournament/{ID}/start', 'TournamentController@start')->name("empezarTorneo");
 Route::get('/tournament/{ID}', 'TournamentController@show')->name("showTournament");
+Route::get('/tournament/{IDTorneo}/join/{IDPlayer}', 'ParticipationController@store')->name("entrarTorneo");
+Route::get('/tournament/{IDTorneo}/leave/{IDPlayer}', 'ParticipationController@destroy')->name("salirTorneo");
+
