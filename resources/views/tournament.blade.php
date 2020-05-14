@@ -111,13 +111,13 @@
                 /* Called whenever bracket is modified
                  *
                  * data:     changed bracket object in format given to init
-         r        * userData: optional data given when bracket is created.
+                 * userData: optional data given when bracket is created.
                  */
                 function saveFn(data) {
                     var info = {"data": data};
                     $.ajax({
                         type: "GET",
-            ''  a          url: "{{route('modificarLlave',$torneo->id)}}",
+                        url: "{{route('modificarLlave',$torneo->id)}}",
                         data: info,
                         dataType: "JSON",
                         success: function (response) {
