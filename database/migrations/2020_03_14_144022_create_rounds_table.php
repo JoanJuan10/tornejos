@@ -15,16 +15,16 @@ class CreateRoundsTable extends Migration
     {
         Schema::create('rounds', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("roundType");
-            $table->foreign('roundType')->references('id')->on('type_rounds');
-            $table->unsignedBigInteger("player1");
-            $table->foreign('player1')->references('id')->on('participations');
-            $table->unsignedBigInteger("player2");
-            $table->foreign('player2')->references('id')->on('participations');
-            $table->unsignedBigInteger("winner")->nullable();
-            $table->foreign('winner')->references('id')->on('participations');
-            $table->unsignedBigInteger("tournament");
-            $table->foreign('tournament')->references('id')->on('tournaments');
+            $table->unsignedBigInteger("type_round_id");
+            $table->foreign('type_round_id')->references('id')->on('type_rounds');
+            $table->unsignedBigInteger("user_id_1");
+            $table->foreign('user_id_1')->references('id')->on('participations');
+            $table->unsignedBigInteger("user_id_2");
+            $table->foreign('user_id_2')->references('id')->on('participations');
+            $table->unsignedBigInteger("winner_id")->nullable();
+            $table->foreign('winner_id')->references('id')->on('participations');
+            $table->unsignedBigInteger("tournament_id");
+            $table->foreign('tournament_id')->references('id')->on('tournaments');
             $table->timestamps();
         });
     }

@@ -16,10 +16,10 @@ class CreateFightsTable extends Migration
         Schema::create('fights', function (Blueprint $table) {
             $table->id();
             $table->integer("winner");
-            $table->unsignedBigInteger("tournament");
-            $table->foreign('tournament')->references('id')->on('tournaments');
-            $table->unsignedBigInteger("round");
-            $table->foreign('round')->references('id')->on('rounds');
+            $table->unsignedBigInteger("tournament_id");
+            $table->foreign('tournament_id')->references('id')->on('tournaments');
+            $table->unsignedBigInteger("round_id");
+            $table->foreign('round_id')->references('id')->on('rounds');
             $table->string("fightNum");
             $table->timestamps();
         });
