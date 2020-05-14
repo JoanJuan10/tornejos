@@ -19,7 +19,6 @@ class CreateParticipationsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger("tournament_id");
             $table->foreign('tournament_id')->references('id')->on('tournaments');
-            $table->boolean("defeated");
             $table->timestamps();
         });
     }

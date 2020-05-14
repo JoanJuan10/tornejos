@@ -35,11 +35,14 @@ class ParticipationController extends Controller
      */
     public function store($idtournament, $idplayer)
     {
-        Participation::create([
-            'user_id' => $idplayer,
-            'tournament_id' => $idtournament,
-            'defeated' => 0,
-        ]);
+        $participaciones = Participation::where('user_id', "=", $idplayer)->get();
+        if (!$participaciones->count()) {
+            Participation::create([
+                'user_id' => $idplayer,
+                'tournament_id' => $idtournament,
+                'defeated' => 0,
+            ]);
+        }
         return redirect(route("showTournament",$idtournament));
     }
 

@@ -24,7 +24,7 @@ class UsersSeeder extends Seeder
         $faker = Faker\Factory::create('es_ES');
         
         
-        for ($i = 0; $i < 15; $i++) {
+        for ($i = 0; $i < 32; $i++) {
             User::create([
                 'name' => $faker->name,
                 'email' => $faker->safeEmail,

@@ -73,7 +73,7 @@ class TournamentController extends Controller
         $premios = $request->post("premios");
 
         $datetime = new DateTime();
-        $data = $request->post("fecha");
+        $datia = $request-()>post("fecha");
         $datetime->setDate(substr($data,0,4), substr($data,5,2), substr($data,8,2));
         $hora = $request->post("hora");
         $datetime->setTime(substr($hora,0,2),substr($hora,3,2),0);
@@ -113,11 +113,13 @@ class TournamentController extends Controller
         $torneo = Tournament::find($tournament);
 
         $participantes = Participation::where("tournament_id", "=", $torneo->id)->get();
+        $rondas = Round::where("tournament_id", "=", $torneo->id)->get();
 
         return view("tournament", [
             'torneo' => $torneo,
             'user' => Auth::user(),
             'participantes' => $participantes,
+            'rondas' => $rondas,
         ]);
     }
 

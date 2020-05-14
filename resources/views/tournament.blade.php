@@ -73,6 +73,7 @@
 @section ("js")
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-bracket/0.11.1/jquery.bracket.min.js" integrity="sha256-mvNdP3BR+ati2Deig7ivY+0Oij09NJCRVV2lvM/R+14=" crossorigin="anonymous"></script>
+@if ($rondas->count())
 <script>
     $(function () {
 
@@ -110,13 +111,13 @@
                 /* Called whenever bracket is modified
                  *
                  * data:     changed bracket object in format given to init
-                 * userData: optional data given when bracket is created.
+         r        * userData: optional data given when bracket is created.
                  */
                 function saveFn(data) {
                     var info = {"data": data};
                     $.ajax({
                         type: "GET",
-                        url: "{{route('modificarLlave',$torneo->id)}}",
+            ''            url: "{{route('modificarLlave',$torneo->id)}}",
                         data: info,
                         dataType: "JSON",
                         success: function (response) {
@@ -125,7 +126,7 @@
                     });
                 }
                  
-                var container = $('.demo');
+                var container = $('.llave');
                 container.bracket({
                     init: saveData,
                     save: saveFn,
@@ -142,7 +143,7 @@
         });
     });
 </script>
-
+@endif
 @endsection
 
 @section ("content")
@@ -191,22 +192,22 @@
                         @if ($participantes->count())
                             @for ($i = 0; $i < $participantes->count(); $i++)
                                 @if ($participantes[$i]->user_id == $user->id)
-                                    <li class="nav-item" title="Próximamente">
-                                        <a class="nav-link disabled" href="{{route("salirTorneo",[$torneo->id, $user->id])}}">Abandonar</a>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{route("salirTorneo",[$torneo->id, $user->id])}}">Abandonar</a>
                                     </li> 
                                     @php
                                         $i = 10000
                                     @endphp
                                 @endif
                                 @if ($i == $participantes->count() - 1) 
-                                    <li class="nav-item" title="Próximamente">
-                                        <a class="nav-link disabled" href="{{route("entrarTorneo",[$torneo->id, $user->id])}}">Unirse</a>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{route("entrarTorneo",[$torneo->id, $user->id])}}">Unirse</a>
                                     </li>
                                 @endif
                             @endfor
                         @else
-                            <li class="nav-item" title="Próximamente">
-                                <a class="nav-link disabled" href="{{route("entrarTorneo",[$torneo->id, $user->id])}}">Unirse</a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route("entrarTorneo",[$torneo->id, $user->id])}}">Unirse</a>
                             </li>
                         @endif
                     @endif
@@ -245,7 +246,7 @@
 @else
 <section>
     <div class="container">
-        <div class="demo">
+        <div class="llave">
         
         </div>
     </div>
