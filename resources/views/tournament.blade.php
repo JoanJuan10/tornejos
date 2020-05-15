@@ -1,72 +1,13 @@
 @extends("layouts.layout")
 
 @section ("css")
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-bracket/0.11.1/jquery.bracket.min.css" integrity="sha256-QB9Q3ENRUxlbd2KF7DKBQwoqaKOsczw7BVnbCVTTKsM=" crossorigin="anonymous" />
+<link rel="stylesheet" href="{{asset('css/bracket.css')}}" />
 <style>
     #tournamentmenu {
         padding-top: 0px;
         padding-bottom: 0px;
         margin: 0 auto;
     }
-    .bracket {
-
-    }
-    .match {
-
-    }
-    .round {
-
-    }
-
-    .team {
-
-    }
-    .win {
-
-    }
-    .lose {
-
-    }
-    .highlight {
-
-    }
-
-    .highlightWinner {
-
-    }
-
-    .highlightLoser {
-
-    }
-
-    .connector {
-
-    }
-
-    .label {
-
-    }
-
-    .score {
-
-    }
-
-    .na {
-
-    }
-
-    .bubble {
-
-    }
-
-    .third {
-
-    }
-
-    .fourth {
-
-    }
-    
 </style>
 @endsection
 
@@ -173,8 +114,14 @@
 
 @section ("content")
 
-<section>
-
+<section style="padding-bottom: 27px;">
+    <div class="container">
+        <div class="row" style="text-align: center">
+            <div class="col-md-12">
+                <h1>{{$torneo->name}}</h1>
+            </div>
+        </div>
+    </div>
 </section>
 <div class="container">
     <div class="row">
@@ -277,7 +224,24 @@
         </div>
     </section>
 @else
-<section>
+<section style="padding-top: 60px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" id="descripcion">
+                <h3 style="margin-bottom: 10px">Descripcion</h3>
+                <p style="white-space: pre-wrap;">{{$torneo->description}}</p>
+                <p>{{$torneo->dateoftournament}}</p>
+            </div>
+            <div class="col-md-6" id="reglas">
+                <h3 style="margin-bottom: 10px;">Reglas</h3>
+                <p style="white-space: pre-wrap;">{{$torneo->rules}}</p>
+            </div>
+            <div class="col-md-12" id="premios">
+                <h3 style="margin-bottom: 10px">Premios</h3>
+                <p style="white-space: pre-wrap;">{{$torneo->prizes}}</p>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="llave">
         

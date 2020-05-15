@@ -44,7 +44,7 @@
             <strong>PRIVACITAT</strong>
         </p>
         <p>
-            Aquest <a href="http://www.debuggers.cat" target="_blank">lloc web</a>
+            Aquest <a href="http://torneos.debuggers.cat" target="_blank">lloc web</a>
             www.debuggers.cat garanteix que la informació personal que vostè envia compta amb la seguretat necessària. Les dades ingressades per usuari o en el cas de requerir una validació de les comandes no seran lliurats a tercers, llevat que hagi de ser revelada en compliment a una ordre judicial o requeriments legals.
         </p>
         <p>La subscripció a butlletins de correus electrònics publicitaris és voluntària i podria ser seleccionada a l'hora de crear el seu compte.</p>
