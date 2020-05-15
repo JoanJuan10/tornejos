@@ -38,22 +38,47 @@
         margin-bottom: 20px;
     }
     .img-fluid {
-        width: 100%;
+        width: 100%; 
     }
+
     #filtre {
         margin-left: 30px;
+        border-radius: 10px;
+        padding-left: 10px;
+        box-shadow: 0 0 10px darkred;
     }
+
     #crear-torneo a {
         color: red;
     }
+
     #crear-torneo a:hover {
-        color: green;
+        color: white;
     }
+
     #crear-torneo {
         text-align: right;
         font-size: 19px;
         margin-top: 12px;
     }
+
+    .zoom {
+    transition: transform .2s; 
+    }
+ 
+    .zoom:hover {
+        transform: scale(1.1);
+    }
+
+    .image-cont{
+        overflow:hidden;
+        border-radius: 20px;
+    }
+
+    .image-cont:hover{
+         box-shadow: 0 0 40px darkred;
+    }
+   
 
 </style>
 @endsection
@@ -72,7 +97,7 @@
         <div class="row games">
             @foreach ($games as $game)
                 <div class="col-md-3">
-                    <div><img id="icono" class="img-fluid" src="{{$game->img_link}}"></div>
+                    <div class="image-cont"><img id="icono" class="img-fluid zoom" src="{{$game->img_link}}"></div>
                     <a role="button" href="{{route("listTournaments", $game->id)}}" class="btn btn-outline-dark boton-juego">{{$game->name}}</a>
                 </div>
             @endforeach

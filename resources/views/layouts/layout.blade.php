@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     
-    <title>Debuggers - Plataforma de Tornejos de Videojocs</title>
+    <title>Debuggers - Plataforma de Torneos de Videojuegos</title>
     
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -40,14 +40,14 @@
                 <ul class="navbar-nav text-uppercase ml-auto">
 					@guest
 					<li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{route("register")}}">Uneix-te</a>
+                        <a class="nav-link js-scroll-trigger" href="{{route("register")}}">Registrate</a>
                     </li>
 					<li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{route("login")}}">Logueja't</a>
+                        <a class="nav-link js-scroll-trigger" href="{{route("login")}}">Logueate</a>
                     </li>
 					@else
 					<li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{route("listGames")}}">Tornejos</a>
+                        <a class="nav-link js-scroll-trigger" href="{{route("listGames")}}">Torneos</a>
                     </li>
 					<li class="nav-item dropdown">
 						<a id="navbarDropdown" class="nav-link dropdown-toggle js-scroll-trigger" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -104,10 +104,10 @@
                 <div class="col-md-4">
                     <ul class="list-inline quicklinks">
                         <li class="list-inline-item">
-                            <a href="{{route("privacitat")}}">Política de Privacitat</a>
+                            <a href="{{route("privacitat")}}">Política de Privacidad</a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="{{route("termes")}}">Termes d'Ús</a>
+                            <a href="{{route("termes")}}">Terminos de Uso</a>
                         </li>
                     </ul>
                 </div>
