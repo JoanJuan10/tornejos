@@ -20,6 +20,17 @@
     }
     
 </script>
+@if (!empty($_GET))
+    @if (!empty($_GET["error"]))
+        <script>
+            $("#error").show("fast");
+        </script>
+    @else
+        <script>
+            $("#error").hide();
+        </script>
+    @endif
+@endif
 
 @guest
 <script>
@@ -92,6 +103,12 @@
         <input type="text" id="filtre" onkeyup="filtrar()" placeholder="Filtra por juegos" title="Escribe el nombre del juego que buscar">
         <div class="col-md-6" id="crear-torneo">
             <a href="{{route('createTournament')}}" role="button"><i class="fa fa-plus-square" aria-hidden="true"></i> Crear Torneo</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger" role="alert" id="error" style="display: none">
+            </div>
         </div>
     </div>
         <div class="row games">

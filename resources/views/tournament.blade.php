@@ -144,6 +144,19 @@
     });
 </script>
 @endif
+
+@if (!empty($_GET))
+    @if (!empty($_GET["error"]))
+        <script>
+            $("#error").show("fast");
+        </script>
+    @else
+        <script>
+            $("#error").hide();
+        </script>
+    @endif
+@endif
+
 @endsection
 
 @section ("content")
@@ -151,6 +164,14 @@
 <section>
 
 </section>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger" role="alert" id="error" style="display: none">
+            </div>
+        </div>
+    </div>
+</div>
 
 <section id="tournamentmenu">
     <div class="container">

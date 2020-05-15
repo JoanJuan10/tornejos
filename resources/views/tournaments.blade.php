@@ -30,11 +30,30 @@
     location.href = "{{route('register')}}";
 </script>
 @endguest
+
+@if (!empty($_GET))
+    @if (!empty($_GET["error"]))
+        <script>
+            $("#error").show("fast");
+        </script>
+    @else
+        <script>
+            $("#error").hide();
+        </script>
+    @endif
+@endif
+
 @endsection
 
 @section ("content")
 <section>
     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-danger" role="alert" id="error" style="display: none">
+                </div>
+            </div>
+        </div>
         <div class="row" id="top">
             <div class="col-md-6">
                 <div id="title">Torneos de {{$game->name}}</div> 
