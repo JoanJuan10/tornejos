@@ -13,7 +13,7 @@ class Tournament extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'dateoftournament', 'openregistration', 'started', 'game_id','user_id','rules','prizes', 'public'
+        'name', 'description', 'dateoftournament','thirdplace', 'openregistration', 'started', 'game_id','user_id','rules','prizes', 'public'
     ];
 
     public function creator() {
