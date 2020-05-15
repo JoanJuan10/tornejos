@@ -27,7 +27,12 @@ class TournamentController extends Controller
         }
 
         $allT = Tournament::where('game_id', '=', $game)->orderBy('id', 'DESC')->get();
+        
         $game = Game::find($game);
+
+        if (empty($game)) {
+            return redirect(route('listGames'));
+        }
 
         return view("tournaments", [
             'tournaments' => $allT,
@@ -125,6 +130,9 @@ class TournamentController extends Controller
     public function show($tournament)
     {
         $torneo = Tournament::find($tournament);
+        if (empty($torneo)) {
+            return redirect(route('listGames'));
+        }
 
         // SEGURIDAD
         if (!Auth::user()) {
