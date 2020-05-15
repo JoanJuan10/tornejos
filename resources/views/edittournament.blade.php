@@ -11,11 +11,7 @@
 @endsection
 
 @section ("content")
-@if ($user->id != $torneo->creator->id)
-<script>
-    location.href = "{{route('listGames')}}";
-</script>
-@endif
+
 <section>
 </section>
 <section id="tournamentmenu">
@@ -136,16 +132,22 @@
                 <div class="col-md-3">
                     <a role="button" href="{{route("deleteTournament", $torneo->id)}}" class="btn btn-primary">Borrar Torneo</a>
                 </div>
-                <div class="col-md-3">
-                    @if ($torneo->openregistration)
-                        <a role="button" href="{{route("inscripcionesTorneo", $torneo->id)}}" class="btn btn-primary">Cerrar Inscripciones</a>
-                    @else 
-                        <a role="button" href="{{route("inscripcionesTorneo", $torneo->id)}}" class="btn btn-primary">Abrir Inscripciones</a>
-                    @endif
-                </div>
-                <div class="col-md-3">
-                    <a role="button" href="{{route("empezarTorneo", $torneo->id)}}" class="btn btn-primary">Empezar Torneo</a>
-                </div>
+                @if (!$rondas->count())
+                    <div class="col-md-3">
+                        @if ($torneo->openregistration)
+                            <a role="button" href="{{route("inscripcionesTorneo", $torneo->id)}}" class="btn btn-primary">Cerrar Inscripciones</a>
+                        @else 
+                            <a role="button" href="{{route("inscripcionesTorneo", $torneo->id)}}" class="btn btn-primary">Abrir Inscripciones</a>
+                        @endif  
+                    </div>
+                    <div class="col-md-3">
+                        <a role="button" href="{{route("empezarTorneo", $torneo->id)}}" class="btn btn-primary">Empezar Torneo</a>
+                    </div>
+                @else
+                    <div class="col-md-3">
+                        <a role="button" href="{{route("reiniciarLlave", $torneo->id)}}" class="btn btn-primary">Reiniciar Torneo</a>
+                    </div>
+                @endif
             </div>
         </div>
     </form>

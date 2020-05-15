@@ -51,4 +51,5 @@ Route::get('/tournament/{IDTorneo}/leave/{IDPlayer}', 'ParticipationController@d
 
 Route::get('/saveBracket/{IDTorneo}', 'TournamentController@savebracket')->name("modificarLlave");
 Route::get('/generateBracket/{IDTorneo}', 'TournamentController@genbracket')->name("generarLlave");
+Route::get('/removeBracket/{IDTorneo}', 'TournamentController@rembracket')->name("reiniciarLlave");
 

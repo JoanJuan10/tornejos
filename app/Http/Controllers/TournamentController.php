@@ -21,6 +21,11 @@ class TournamentController extends Controller
      */
     public function index($game)
     {
+        // SEGURIDAD
+        if (!Auth::user()) {
+            return redirect(route('login'));
+        }
+
         $allT = Tournament::where('game_id', '=', $game)->orderBy('id', 'DESC')->get();
         $game = Game::find($game);
 
@@ -38,6 +43,11 @@ class TournamentController extends Controller
      */
     public function create($game = null)
     {
+        // SEGURIDAD
+        if (!Auth::user()) {
+            return redirect(route('login'));
+        }
+
         if ($game != null){
             $game = Game::find($game);
         }
@@ -55,6 +65,10 @@ class TournamentController extends Controller
      */
     public function store(Request $request)
     {
+        // SEGURIDAD
+        if (!Auth::user()) {
+            return redirect(route('login'));
+        }
 
         $juegos = Game::where('name', '=', $request->post("juego"))->get();
 
@@ -112,6 +126,11 @@ class TournamentController extends Controller
     {
         $torneo = Tournament::find($tournament);
 
+        // SEGURIDAD
+        if (!Auth::user()) {
+            return redirect(route('login'));
+        }
+
         $participantes = Participation::where("tournament_id", "=", $torneo->id)->get();
         $rondas = Round::where("tournament_id", "=", $torneo->id)->get();
 
@@ -132,8 +151,13 @@ class TournamentController extends Controller
     public function edit($tournament)
     {
         $torneo = Tournament::find($tournament);
+
+        // SEGURIDAD
         if(!$this->security($torneo)) {
-            return redirect(route("showTournament", $torneo->id));
+            if (Auth::user()) {
+                return redirect(route('showTournament', $torneo->id));
+            }
+            return redirect(route('login'));
         }
 
         $participantes = Participation::where("tournament_id", "=", $torneo->id)->get();
@@ -159,6 +183,16 @@ class TournamentController extends Controller
      */
     public function update(Request $request, $tournament)
     {
+        $torneo = Tournament::find($tournament);
+
+        // SEGURIDAD
+        if(!$this->security($torneo)) {
+            if (Auth::user()) {
+                return redirect(route('showTournament', $torneo->id));
+            }
+            return redirect(route('login'));
+        }
+
         $juegos = Game::where("name", '=', $request->post("juego"))->get();
 
         if (!$juegos->count()) {
@@ -178,8 +212,6 @@ class TournamentController extends Controller
         else {
             $public = 0;
         }
-
-        $torneo = Tournament::find($tournament);
 
         $torneo->name = $request->post('nombretorneo');
         $torneo->description = $request->post('descripcion');
@@ -210,8 +242,13 @@ class TournamentController extends Controller
     public function destroy($tournament)
     {
         $torneo = Tournament::find($tournament);
+
+        // SEGURIDAD
         if(!$this->security($torneo)) {
-            return redirect(route("showTournament", $torneo->id));
+            if (Auth::user()) {
+                return redirect(route('showTournament', $torneo->id));
+            }
+            return redirect(route('login'));
         }
         
         $rondas = Round::where('tournament_id', '=', $tournament)->get();
@@ -234,8 +271,12 @@ class TournamentController extends Controller
     public function inscripciones ($tournament) {
         $torneo = Tournament::find($tournament);
 
-        if(!$this->security($torneo)) {
-            return redirect(route("showTournament", $torneo->id));
+        // SEGURIDAD
+        if (!$this->security($torneo)) {
+            if (Auth::user()) {
+                return redirect(route('showTournament', $torneo->id));
+            }
+            return redirect(route('login'));
         }
         
 
@@ -254,8 +295,12 @@ class TournamentController extends Controller
     public function start ($tournament) {
         $torneo = Tournament::find($tournament);
 
-        if(!$this->security($torneo)) {
-            return redirect(route("showTournament", $torneo->id));
+        // SEGURIDAD
+        if (!$this->security($torneo)) {
+            if (Auth::user()) {
+                return redirect(route('showTournament', $torneo->id));
+            }
+            return redirect(route('login'));
         }
 
         $participantes = Participation::where('tournament_id', '=', $tournament)->get();
@@ -358,12 +403,17 @@ class TournamentController extends Controller
             }
         }
 
-
-
         return redirect(route('showTournament', $torneo->id));
         
     }
     public function savebracket($idtournament, Request $request) {
+        $torneo = Tournament::find($idtournament);
+
+        // SEGURIDAD
+        if (!$this->security($torneo)) {
+            return new JsonResponse("NO PUEDES GUARDAR LA LLAVE SI NO ERES EL CREADOR DEL TORNEO");
+        }
+
         $data = $_GET["data"]["results"][0];
         $rondas = Round::where("tournament_id", "=", $idtournament)->get();
         $i = 0;
@@ -387,6 +437,11 @@ class TournamentController extends Controller
         return new JsonResponse($rondas);
     }
     public function genbracket($idtournament, Request $request) {
+        // SEGURIDAD
+        if (!Auth::user()) {
+            return redirect(route('login'));
+        }
+
         $rondas = Round::where("tournament_id", "=", $idtournament)->get();
 
         foreach ($rondas as $ronda) {
@@ -406,8 +461,27 @@ class TournamentController extends Controller
 
         return new JsonResponse($rondas);
     }
+    public function rembracket($idtournament) {
+        $torneo = Tournament::find($idtournament);
+
+        //SEGURIDAD
+        if(!$this->security($torneo)) {
+            if (Auth::user()) {
+                return redirect(route('showTournament', $torneo->id));
+            }
+            return redirect(route('login'));
+        }
+        
+        $rondas = Round::where('tournament_id', '=', $torneo->id)->get();
+        foreach ($rondas as $ronda) {
+
+            Round::destroy($ronda->id);
+        }
+
+        return redirect(route('showTournament', $torneo->id));
+    }
     public function security($torneo) {
-        if (Auth::user()->id == $torneo->user_id || Auth::user()->id == 1) {
+        if (Auth::user() && (Auth::user()->id == $torneo->user_id || Auth::user()->id == 1)) {
             return true;
         }
         return false;
