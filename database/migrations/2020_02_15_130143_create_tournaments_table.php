@@ -23,6 +23,7 @@ class CreateTournamentsTable extends Migration
             $table->boolean("openregistration")->default(0);
             $table->boolean("started")->default(0);
             $table->boolean("public")->default(0);
+            $table->boolean("thirdplace")->default(1);
             $table->unsignedBigInteger("user_id");
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger("game_id");
