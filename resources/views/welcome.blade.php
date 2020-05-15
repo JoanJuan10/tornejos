@@ -9,7 +9,7 @@
                 <a class="btn btn-outline-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Informate</a>
                 @guest
                 <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="{{route("register")}}">Registrate</a>
-                <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="{{route("login")}}">Logueate</a>
+                <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="{{route("login")}}">Login</a>
                 @else
                 <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="{{route("listGames")}}">Busca un Torneo</a>
                 @endguest

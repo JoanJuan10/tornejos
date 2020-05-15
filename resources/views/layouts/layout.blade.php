@@ -43,7 +43,7 @@
                         <a class="nav-link js-scroll-trigger" href="{{route("register")}}">Registrate</a>
                     </li>
 					<li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{route("login")}}">Logueate</a>
+                        <a class="nav-link js-scroll-trigger" href="{{route("login")}}">Login</a>
                     </li>
 					@else
 					<li class="nav-item">

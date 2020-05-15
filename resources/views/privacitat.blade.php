@@ -6,7 +6,7 @@
 <div class="container">
     <p>
     <h2 style="text-align: center;">
-            <strong>POLÍTICA DE PRIVACITAT</strong>
+            <strong>POLÍTICA DE PRIVACIDAD</strong>
     </h2>
     </p>
     <p>&nbsp;</p>

@@ -125,19 +125,31 @@
                         }
                     });
                 }
-                 
-                var container = $('.llave');
-                container.bracket({
-                    init: saveData,
-                    save: saveFn,
-                    userData: "Hola",
-                    teamWidth: 200,
-                    scoreWidth: 32,
-                    matchMargin: 64,
-                    roundMargin: 65,
-                    disableToolbar: true,
-                    disableTeamEdit: true,
-                });
+                if ("{{$torneo->user_id}}" == "{{$user->id}}") {
+                    var container = $('.llave');
+                    container.bracket({
+                        init: saveData,
+                        save: saveFn,
+                        userData: "Hola",
+                        teamWidth: 200,
+                        scoreWidth: 32,
+                        matchMargin: 64,
+                        roundMargin: 65,
+                        disableToolbar: true,
+                        disableTeamEdit: true,
+                    });
+                }
+                else {
+                    var container = $('.llave');
+                    container.bracket({
+                        init: saveData,
+                        userData: "Hola",
+                        teamWidth: 200,
+                        scoreWidth: 32,
+                        matchMargin: 64,
+                        roundMargin: 65,
+                    });
+                }
                 
             }
         });
