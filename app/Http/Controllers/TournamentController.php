@@ -130,11 +130,11 @@ class TournamentController extends Controller
     public function show($tournament)
     {
         $torneo = Tournament::find($tournament);
+
+        // SEGURIDAD
         if (empty($torneo)) {
             return redirect(route('listGames'));
         }
-
-        // SEGURIDAD
         if (!Auth::user()) {
             return redirect(route('login'));
         }

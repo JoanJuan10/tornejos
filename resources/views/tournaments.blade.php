@@ -11,13 +11,16 @@
         color: red;
     }
     #crear-torneo a:hover {
-        color: green;
+        color: darkred;
+        font-weight: 800;
+        text-shadow: 0.1em 0.1em 0.2em white;
     }
     #crear-torneo {
         text-align: right;
     }
     #show a:hover {
-        color: orange;
+        color: darkred;
+        text-shadow: 0.1em 0.1em 0.2em white;
     }
 
 </style>

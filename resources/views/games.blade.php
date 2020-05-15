@@ -64,7 +64,8 @@
     }
 
     #crear-torneo a:hover {
-        color: white;
+        color: darkred;
+        text-shadow: 0.1em 0.1em 0.2em white;
     }
 
     #crear-torneo {
@@ -87,7 +88,7 @@
     }
 
     .image-cont:hover{
-         box-shadow: 0 0 40px darkred;
+         box-shadow: 0 0 40px palegoldenrod;
     }
    
 
