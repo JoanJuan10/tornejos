@@ -131,9 +131,13 @@ class TournamentController extends Controller
      */
     public function edit($tournament)
     {
-        
         $torneo = Tournament::find($tournament);
+        if(!$this->security($torneo)) {
+            return redirect(route("showTournament", $torneo->id));
+        }
+
         $participantes = Participation::where("tournament_id", "=", $torneo->id)->get();
+        $rondas = Round::where("tournament_id", "=", $torneo->id)->get();
         $date = substr($torneo->dateoftournament, 0,10);
         $time = substr($torneo->dateoftournament, 11,5);
         return view("edittournament", [
@@ -142,6 +146,7 @@ class TournamentController extends Controller
             'time' => $time,
             'user' => Auth::user(),
             'participantes' => $participantes,
+            'rondas' => $rondas,
         ]);
     }
 
@@ -204,6 +209,10 @@ class TournamentController extends Controller
      */
     public function destroy($tournament)
     {
+        $torneo = Tournament::find($tournament);
+        if(!$this->security($torneo)) {
+            return redirect(route("showTournament", $torneo->id));
+        }
         
         $rondas = Round::where('tournament_id', '=', $tournament)->get();
         foreach ($rondas as $ronda) {
@@ -216,7 +225,7 @@ class TournamentController extends Controller
             Participation::destroy($participacion->id);
         }
 
-        $torneo = Tournament::find($tournament);
+        
         $juego = $torneo->game->id;
         Tournament::destroy($tournament);
         return redirect(route("listTournaments", $juego));
@@ -224,6 +233,11 @@ class TournamentController extends Controller
 
     public function inscripciones ($tournament) {
         $torneo = Tournament::find($tournament);
+
+        if(!$this->security($torneo)) {
+            return redirect(route("showTournament", $torneo->id));
+        }
+        
 
         if ($torneo->openregistration) {
             $torneo->openregistration = 0;
@@ -239,6 +253,11 @@ class TournamentController extends Controller
     }
     public function start ($tournament) {
         $torneo = Tournament::find($tournament);
+
+        if(!$this->security($torneo)) {
+            return redirect(route("showTournament", $torneo->id));
+        }
+
         $participantes = Participation::where('tournament_id', '=', $tournament)->get();
 
         if ($participantes->count() < 2) {
@@ -386,5 +405,11 @@ class TournamentController extends Controller
         }
 
         return new JsonResponse($rondas);
+    }
+    public function security($torneo) {
+        if (Auth::user()->id == $torneo->user_id || Auth::user()->id == 1) {
+            return true;
+        }
+        return false;
     }
 }
