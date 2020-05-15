@@ -88,8 +88,8 @@
 <section>
     <div class="container">
     <div class="row" style="margin-bottom: 30px;">
-        <h2 style="color: white">Busca Tornejos</h2>
-        <input type="text" id="filtre" onkeyup="filtrar()" placeholder="Filtra per jocs" title="Escriu el nom del joc a buscar">
+        <h2 style="color: white">Busca Torneos</h2>
+        <input type="text" id="filtre" onkeyup="filtrar()" placeholder="Filtra por juegos" title="Escribe el nombre del juego que buscar">
         <div class="col-md-6" id="crear-torneo">
             <a href="{{route('createTournament')}}" role="button"><i class="fa fa-plus-square" aria-hidden="true"></i> Crear Torneo</a>
         </div>
