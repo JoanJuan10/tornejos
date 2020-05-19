@@ -171,7 +171,7 @@
                     @if ($torneo->openregistration)
                         @if ($participantes->count())
                             @for ($i = 0; $i < $participantes->count(); $i++)
-                                @if ($participantes[$i]->user_id == $user->id)
+                                @if ($participantes[$i]->user_id == $user->id && $participantes[$i]->tournament_id == $torneo->id)
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{route("salirTorneo",[$torneo->id, $user->id])}}">Abandonar</a>
                                     </li> 
@@ -179,7 +179,7 @@
                                         $i = 10000
                                     @endphp
                                 @endif
-                                @if ($i == $participantes->count() - 1) 
+                                @if ($i == $participantes->count() - 1)
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{route("entrarTorneo",[$torneo->id, $user->id])}}">Unirse</a>
                                     </li>
